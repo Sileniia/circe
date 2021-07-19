@@ -13,6 +13,31 @@ bad actors with an interesting two-way communication channel.
 
 For the time being, Circe focuses on data exfiltration using the Bookmarks file in Google Chrome.
 
+### Installation
+This project is currently *not* on PyPI -- please clone the repository and install locally or use pip (there are no external dependencies):
+    pip install git+git://github.com/Sileniia/circe.git
+
+### Usage
+    import circe
+    profile = circe.Profile()
+    profile.load()
+    profile.add_file("path_to_file")
+    profile.save()
+
+We can also use a `circe.Profile()` object as a context manager to let Python handle `load()` and `save()` for us:
+###
+    
+    with circe.Profile() as profile:
+        # Add a file
+        profile.add_file("path_to_file")
+        
+        # Retrieve the file content
+        _, data = profile.get(0)
+
+In order to actually move data, you will need to turn on profile syncing in Chrome:
+
+https://support.google.com/chrome/answer/185277
+
 ### Advantages:
     1. "Low-tech" -- tools are easy to use and likely available in the environment (web browser, profile syncing)
     2. Less obvious than other exfiltration methods (email, file-sharing services, flash drives, remote management
